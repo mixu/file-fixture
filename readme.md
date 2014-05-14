@@ -29,9 +29,11 @@ Use the optional `{ ext: '...' }` argument if you want a specific extension.
 `.dir(spec)`: generate a temporary directories with specific file names and contents:
 
     var tmpDir = fixture.dir({
-      'index.js': 'module.exports = require("./second.js");',
-      'second.js': 'module.exports = true;'
+      'index.js': 'module.exports = require("./foo/second.js");',
+      'foo/second.js': 'module.exports = true;'
     });
+
+Note how the keys can also contain full paths.
 
 Returns the path to root of the directory. The directory will contain two files with the given file names and content.
 
@@ -49,6 +51,14 @@ You can also pass an array of strings as the content - it will be joined with ne
 `.file(data, opts)`: write a temporary file with a specific content:
 
     var tmpFile = fixture.file('<html>Hello world</html>', { ext: '.html'});
+
+or:
+
+    var tmpFile = fixture.file([
+      '<html>',
+      '  Hello world',
+      '</html>'
+    ], { ext: '.html'});
 
 Returns the path to the file.
 
