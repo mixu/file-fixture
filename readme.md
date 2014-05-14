@@ -2,6 +2,10 @@
 
 Generate temporary file/directory names and temporary file/directory structures for writing tests.
 
+## Installation
+
+    npm install --save file-fixture
+
 ## API / examples
 
 Preamble:
