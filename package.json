@@ -1,0 +1,30 @@
+{
+  "name": "file-fixture",
+  "version": "0.0.0",
+  "description": "Generate temporary file/directory names and temporary file/directory structures for writing tests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mixu/file-fixture.git"
+  },
+  "keywords": [
+    "fixture",
+    "test",
+    "fixtures",
+    "file",
+    "temp"
+  ],
+  "author": "Mikito Takada <mikito.takada@gmail.com> (http://mixu.net/)",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/mixu/file-fixture/issues"
+  },
+  "homepage": "https://github.com/mixu/file-fixture",
+  "dependencies": {
+    "mkdirp": "0.5.x",
+    "rimraf": "2.2.x"
+  }
+}
