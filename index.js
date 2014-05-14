@@ -6,49 +6,39 @@ var os = require('os'),
 
 var tmpDir = (os.tmpdir || os.tmpDir)();
 
-function FixtureGen() {
+function Fixture() {
   this.root = this.filename({
     path: tmpDir
   });
   fs.mkdirSync(this.root);
 }
 
-// get a new filename
-FixtureGen.prototype.filename = function(opts) {
+Fixture.filename = function(opts) {
   var filename,
-      basePath;
-  if (opts && opts.path) {
-    basePath = opts.path;
-  } else {
-    basePath = this.root;
-  }
-  // generate a new file name
+      basePath = (opts && opts.path ? opts.path : tmpDir);
   do {
     filename = basePath + '/' +
       Math.random().toString(36).substring(2) +
       (opts && opts.ext ? opts.ext : '');
   } while(fs.existsSync(filename));
-
   return filename;
 };
 
-FixtureGen.prototype.file = function(data, opts) {
-  var filename = this.filename(opts);
-
+Fixture.file = function(data, opts) {
+  var filename = Fixture.filename(opts);
   fs.writeFileSync(filename, (Array.isArray(data) ? data.join('\n') : data));
-
   return filename;
 };
 
-FixtureGen.prototype.dirname = function() {
-  var filename = this.filename();
+Fixture.dirname = function(opts) {
+  var filename = Fixture.filename(opts);
   fs.mkdirSync(filename);
   return filename;
 };
 
-FixtureGen.prototype.dir = function(spec) {
+Fixture.dir = function(spec, opts) {
   // generate a new directory
-  var outDir = this.filename();
+  var outDir = Fixture.filename(opts);
   fs.mkdirSync(outDir);
   // create each file under the directory
   Object.keys(spec).forEach(function(name) {
@@ -63,11 +53,25 @@ FixtureGen.prototype.dir = function(spec) {
   return outDir;
 };
 
-FixtureGen.prototype.clean = function() {
+['filename',  'dirname'].forEach(function(key) {
+  Fixture.prototype[key] = function(opts) {
+    if(!opts.path) { opts.path = this.root; }
+    return Fixture[key](opts);
+  };
+});
+
+['dir',  'file'].forEach(function(key) {
+  Fixture.prototype[key] = function(first, opts) {
+    if(!opts.path) { opts.path = this.root; }
+    return Fixture[key](first, opts);
+  };
+});
+
+Fixture.prototype.clean = function() {
   // ensure that this is under os.tmpdir()
   if (this.root.substr(tmpDir.length) == tmpDir) {
     rimraf.sync(this.root);
   }
 };
 
-module.exports = FixtureGen;
+module.exports = Fixture;
