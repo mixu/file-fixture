@@ -55,6 +55,7 @@ Fixture.dir = function(spec, opts) {
 
 ['filename',  'dirname'].forEach(function(key) {
   Fixture.prototype[key] = function(opts) {
+    if(!opts) { opts = {}; }
     if(!opts.path) { opts.path = this.root; }
     return Fixture[key](opts);
   };
@@ -62,6 +63,7 @@ Fixture.dir = function(spec, opts) {
 
 ['dir',  'file'].forEach(function(key) {
   Fixture.prototype[key] = function(first, opts) {
+    if(!opts) { opts = {}; }
     if(!opts.path) { opts.path = this.root; }
     return Fixture[key](first, opts);
   };
