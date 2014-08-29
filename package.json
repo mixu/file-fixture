@@ -1,6 +1,6 @@
 {
   "name": "file-fixture",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generate temporary file/directory names and temporary file/directory structures for writing tests.",
   "main": "index.js",
   "scripts": {
