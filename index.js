@@ -17,9 +17,9 @@ Fixture.filename = function(opts) {
   var filename,
       basePath = (opts && opts.path ? opts.path : tmpDir);
   do {
-    filename = basePath + '/' +
+    filename = path.normalize(basePath + '/' +
       Math.random().toString(36).substring(2) +
-      (opts && opts.ext ? opts.ext : '');
+      (opts && opts.ext ? opts.ext : ''));
   } while(fs.existsSync(filename));
   return filename;
 };
